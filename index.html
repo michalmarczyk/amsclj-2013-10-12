@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Expanding the Clojure PDS family</title>
+    <link rel="stylesheet" href="deck.js/core/deck.core.css"/>
+    <link rel="stylesheet" href="deck.js/themes/style/swiss.css"/>
+    <!-- <link rel="stylesheet" href="deck.js/themes/transition/horizontal-slide.css"/> -->
+    <link rel="stylesheet" href="deck.js/extensions/hash/deck.hash.css"/>
+    <link rel="stylesheet" href="deck.js/extensions/menu/deck.menu.css"/>
+    <link rel="stylesheet" href="custom.css"/>
+    <script src="deck.js/modernizr.custom.js"></script>
+  </head>
+  <body class="deck-container">
+    <section class="slide">
+      <h1>Expanding the Clojure PDS family</h1>
+      <div class="author"><p>Michał Marczyk</p></div>
+    </section>
+
+    <section class="slide">
+      <h2>Commercial break!</h2>
+      <ul>
+        <li class="slide">
+          An advert for <a href="https://github.com/clojure/core.rrb-vector">core.rrb-vector</a>
+          and <a href="https://github.com/michalmarczyk/avl.clj">avl.clj</a>
+        </li>
+        <li class="slide">
+          Working well today
+        </li>
+        <li class="slide">
+          Performance and testing coverage could be improved
+          <ul>
+            <li class="slide">
+              In fact, they are being improved
+            </li>
+            <li class="slide">
+              Experience reports greatly appreciated!
+            </li>
+          </ul>
+        </li>
+        <li class="slide">
+          Some API design work remains, interested parties welcome to
+          participate
+          <ul>
+            <li class="slide">
+              NB. most of the functionality piggybacks on functions in
+              <tt>clojure.core</tt>&mdash;not going away
+            </li>
+            <li class="slide">
+              However, new functions may be introduced
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Beyond that&hellip;</h2>
+      <ul>
+        <li class="slide">
+          Features of Clojure which enable good performance&hellip;
+        </li>
+        <li class="slide">
+          &hellip;of <em>elegant</em> and <em>idiomatic</em> programs&hellip;
+        </li>
+        <li class="slide">
+          &hellip;which core.rrb-vector and avl.clj hook into seamlessly.
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>core.rrb-vector</h2>
+      <ul>
+        <li class="slide">
+          Bagwell &amp; Rompf, <i>RRB-Trees: Efficient Immutable Vectors</i>
+        </li>
+        <li class="slide">
+          RRB: &ldquo;relaxed radix balanced&rdquo;&mdash;relaxed
+          radix search in a balanced tree / trie
+        </li>
+        <li class="slide">
+          Algorithmically viable&mdash;demonstrated by the ClojureScript version
+        </li>
+        <li class="slide">
+          Basic API complete in ClojureScript, will be complete next
+          release on the JVM
+        </li>
+        <li class="slide">
+          Transients for gvec-like vectors (<tt>vector-of</tt>)
+        </li>
+        <li class="slide">
+          Main point of attraction: <tt>catvec</tt>, <tt>subvec</tt>
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>avl.clj</h2>
+      <ul>
+        <li class="slide">
+          Drop-in replacement for built-in sorted sollections
+        </li>
+        <li class="slide">
+          Uses persistent AVL trees
+        </li>
+        <li class="slide">
+          Decorated nodes to support select and rank
+          <ul>
+            <li class="slide">
+              Hooks into <tt>nth</tt>, adds <tt>rank-of</tt>
+            </li>
+          </ul>
+        </li>
+        <li class="slide">
+          Supports the transients API
+          <ul>
+            <li class="slide">
+              Construction time for in-order and reversed key sequences
+              superior to built-in red-black trees
+            </li>
+            <li class="slide">
+              Worst observed behaviour with randomized insert
+              ordering&mdash;same timings
+            </li>
+          </ul>
+        </li>
+        <li class="slide">
+          On the JVM, extremely encouraging benchmarks
+          <ul>
+            <li class="slide">
+              Notably, equivalent to the built-ins (written in Java)
+              for same path in tree
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Blending in</h2>
+      <ul>
+        <li class="slide">
+          Very doable with no cooperation from Clojure
+        </li>
+        <li class="slide">
+          core.rrb-vector: chunked seqs, <tt>reduce</tt>
+        </li>
+        <li class="slide">
+          both: <tt>reduce-kv</tt>, transients
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Attachment points</h2>
+      <ul>
+        <li class="slide">
+          No documentation as such
+        </li>
+        <li class="slide">
+          Saving grace, JVM: <tt>clojure.core/ancestors</tt> (<tt>(ancestors (class []))</tt>)
+        </li>
+        <li class="slide">
+          Saving grace, ClojureScript: only need to look at <tt>core.cljs</tt>,
+          mostly at the protocol definitions near the top
+        </li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Thank you for your attention!</h2>
+      <p>
+        Michał Marczyk<br/>
+        <a href="mailto:michal.marczyk@gmail.com">
+          michal.marczyk@gmail.com
+        </a>
+        <br/>
+        <a href="https://github.com/michalmarczyk/">
+          github.com/michalmarczyk
+        </a>
+        <br/>
+        mmarczyk on #clojure
+      </p>
+      <p>
+        <a href="https://github.com/clojure/core.rrb-vector">https://github.com/clojure/core.rrb-vector</a>
+        <br/>
+        <tt>[org.clojure/core.rrb-vector "0.0.9"]</tt>
+        <br/>
+        <br/>
+        <a href="https://github.com/michalmarczyk/avl.clj">https://github.com/michalmarczyk/avl.clj</a>
+        <br/>
+        <tt>[avl.clj "0.0.8"]</tt>
+      </p>
+    </section>
+
+    <script src="deck.js/jquery-1.7.2.min.js"></script>
+    <script src="deck.js/core/deck.core.js"></script>
+
+    <script src="deck.js/extensions/hash/deck.hash.js"></script>
+    <script src="deck.js/extensions/menu/deck.menu.js"></script>
+
+    <script>$(function () { $.deck(".slide"); });</script>
+  </body>
+</html>
